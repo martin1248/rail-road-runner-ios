@@ -13,6 +13,7 @@
 		D8DD3A3E21ECCB5D0012486F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A3D21ECCB5D0012486F /* Assets.xcassets */; };
 		D8DD3A4121ECCB5D0012486F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A3F21ECCB5D0012486F /* LaunchScreen.storyboard */; };
 		D8DD3A4A21ECDEDE0012486F /* Train length black.png in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A4921ECDEDD0012486F /* Train length black.png */; };
+		D8DD3A4C21ECE96F0012486F /* LocationIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A4B21ECE96F0012486F /* LocationIcon.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		D8DD3A4021ECCB5D0012486F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D8DD3A4221ECCB5D0012486F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8DD3A4921ECDEDD0012486F /* Train length black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Train length black.png"; path = "../../../icons/train length icon/Train length black.png"; sourceTree = "<group>"; };
+		D8DD3A4B21ECE96F0012486F /* LocationIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LocationIcon.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				D8DD3A3D21ECCB5D0012486F /* Assets.xcassets */,
 				D8DD3A3F21ECCB5D0012486F /* LaunchScreen.storyboard */,
 				D8DD3A4221ECCB5D0012486F /* Info.plist */,
+				D8DD3A4B21ECE96F0012486F /* LocationIcon.xcassets */,
 			);
 			path = "Rail Road Runner";
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8DD3A4121ECCB5D0012486F /* LaunchScreen.storyboard in Resources */,
+				D8DD3A4C21ECE96F0012486F /* LocationIcon.xcassets in Resources */,
 				D8DD3A3E21ECCB5D0012486F /* Assets.xcassets in Resources */,
 				D8DD3A4A21ECDEDE0012486F /* Train length black.png in Resources */,
 				D8DD3A3C21ECCB5B0012486F /* Main.storyboard in Resources */,
