@@ -12,6 +12,7 @@
 		D8DD3A3C21ECCB5B0012486F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A3A21ECCB5B0012486F /* Main.storyboard */; };
 		D8DD3A3E21ECCB5D0012486F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A3D21ECCB5D0012486F /* Assets.xcassets */; };
 		D8DD3A4121ECCB5D0012486F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A3F21ECCB5D0012486F /* LaunchScreen.storyboard */; };
+		D8DD3A4A21ECDEDE0012486F /* Train length black.png in Resources */ = {isa = PBXBuildFile; fileRef = D8DD3A4921ECDEDD0012486F /* Train length black.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		D8DD3A3D21ECCB5D0012486F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D8DD3A4021ECCB5D0012486F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D8DD3A4221ECCB5D0012486F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8DD3A4921ECDEDD0012486F /* Train length black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Train length black.png"; path = "../../../icons/train length icon/Train length black.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		D8DD3A3521ECCB5B0012486F /* Rail Road Runner */ = {
 			isa = PBXGroup;
 			children = (
+				D8DD3A4821ECDECA0012486F /* Images */,
 				D8DD3A3621ECCB5B0012486F /* AppDelegate.swift */,
 				D8DD3A3821ECCB5B0012486F /* ViewController.swift */,
 				D8DD3A3A21ECCB5B0012486F /* Main.storyboard */,
@@ -62,6 +65,14 @@
 				D8DD3A4221ECCB5D0012486F /* Info.plist */,
 			);
 			path = "Rail Road Runner";
+			sourceTree = "<group>";
+		};
+		D8DD3A4821ECDECA0012486F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D8DD3A4921ECDEDD0012486F /* Train length black.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +135,7 @@
 			files = (
 				D8DD3A4121ECCB5D0012486F /* LaunchScreen.storyboard in Resources */,
 				D8DD3A3E21ECCB5D0012486F /* Assets.xcassets in Resources */,
+				D8DD3A4A21ECDEDE0012486F /* Train length black.png in Resources */,
 				D8DD3A3C21ECCB5B0012486F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
