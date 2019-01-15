@@ -12,8 +12,6 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
     let userDefaultsTrainLength = "trainLength"
-    let buttonColorDisabled = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.5)
-    let buttonColorEnabled = UIColor(red: 0.9, green: 0.2, blue: 0.2, alpha: 0.5)
     let minGpsAccuracy : Double = 50
 
     @IBOutlet weak var trainLengthTextBox: UITextField!
@@ -22,6 +20,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var gpsAccuracyInfoLabel: UILabel!
     @IBOutlet weak var abortedInfoLabel: UILabel!
 
+    var updateTimer : Timer?
     var locationManager:CLLocationManager!
     var started = false
 
@@ -35,6 +34,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
         initLocationManager()
         locationManager.startUpdatingLocation()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         if let trainLenght = UserDefaults.standard.string(forKey: userDefaultsTrainLength) {
             trainLengthTextBox.text = trainLenght;
@@ -42,16 +45,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
         startStopButton.layer.cornerRadius = 49
         startStopButton.clipsToBounds = true
-        startStopButton.backgroundColor = buttonColorDisabled
+        startStopButton.isEnabled = true
+
+        self.updateTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @objc func update() {
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         locationManager.stopUpdatingLocation()
+        updateTimer?.invalidate()
     }
 
     // MARK: - CLLocationManager
@@ -64,34 +70,50 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0] as CLLocation
+        let currentLocation:CLLocation = locations[0] as CLLocation
 
-        let gpsAccurateEnough : Bool = userLocation.horizontalAccuracy > minGpsAccuracy
+        let gpsAccurateEnough : Bool = currentLocation.horizontalAccuracy > minGpsAccuracy
 
         if !gpsAccurateEnough {
             gpsAccuracyInfoLabel.text = "GPS Koordinaten sind zu ungenau."
-            //startStopButton.backgroundColor = buttonColorDisabled
             startStopButton.isEnabled = false
         } else {
             gpsAccuracyInfoLabel.text = ""
-            //startStopButton.backgroundColor = buttonColorEnabled
             startStopButton.isEnabled = true
         }
+
+        if started {
+            if lastLocation != nil {
+                let lastDistance = lastLocation?.distance(from: currentLocation)
+
+            }
+            lastLocation = currentLocation
+        } else {
+            lastLocation = nil
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Unable to access your current location")
     }
 
     // MARK: - UI
 
     @IBAction func startStopWasPressed(_ sender: Any) {
-        if !CLLocationManager.locationServicesEnabled() {
-            gpsAccuracyInfoLabel.text = "GPS ist nicht aktiviert"
+         if Int(trainLengthTextBox.text ?? "0") == 0 {
             return
         }
 
-        if Int(trainLengthTextBox.text ?? "0") == 0 {
-            return
+        if !started {
+            started = true
+            trainLengthTextBox.isUserInteractionEnabled = false
+            UserDefaults.standard.set(trainLengthTextBox.text, forKey: userDefaultsTrainLength)
+            startStopButton.setTitle("Stop", for: UIControl.State.normal)
+        } else {
+            started = false
+            trainLengthTextBox.isUserInteractionEnabled = true
+            startStopButton.setTitle("Start", for: UIControl.State.normal)
         }
-        UserDefaults.standard.set(trainLengthTextBox.text, forKey: userDefaultsTrainLength)
-
     }
 
 }

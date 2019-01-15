@@ -123,7 +123,6 @@
                     <connections>
                         <outlet property="abortedInfoLabel" destination="EVR-Cm-ft0" id="sE2-cy-qfy"/>
                         <outlet property="gpsAccuracyInfoLabel" destination="xoF-Sn-NjO" id="X8d-Tc-n45"/>
-                        <outlet property="gpsIsNotAccurateLabel" destination="gyl-Vp-hFB" id="Tim-6F-9M0"/>
                         <outlet property="progressView" destination="b5W-sN-6A9" id="wKJ-yV-jPU"/>
                         <outlet property="startStopButton" destination="yd9-5T-eNn" id="pbp-Su-KsG"/>
                         <outlet property="trainLengthTextBox" destination="sr9-wH-gEX" id="35C-CL-47N"/>
