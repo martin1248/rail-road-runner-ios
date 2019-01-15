@@ -27,10 +27,12 @@ class ViewController: UIViewController {
         if let trainLenght = UserDefaults.standard.string(forKey: userDefaultsTrainLength) {
             trainLengthTextBox.text = trainLenght;
         }
-
     }
 
     @IBAction func startStopWasPressed(_ sender: Any) {
+        if Int(trainLengthTextBox.text ?? "0") == 0 {
+            return
+        }
         UserDefaults.standard.set(trainLengthTextBox.text, forKey: userDefaultsTrainLength)
     }
 
