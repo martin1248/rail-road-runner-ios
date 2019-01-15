@@ -16,9 +16,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        startStopButton.layer.cornerRadius = 33
+        startStopButton.layer.cornerRadius = 49
         startStopButton.clipsToBounds = true
         startStopButton.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.5)
+        startStopButton.backgroundColor = UIColor(red: 0.9, green: 0.2, blue: 0.2, alpha: 0.5)
     }
 
 
