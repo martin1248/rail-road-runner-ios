@@ -10,18 +10,29 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let userDefaultsTrainLength = "trainLength"
+
+    @IBOutlet weak var trainLengthTextBox: UITextField!
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var startStopButton: UIButton!
+    @IBOutlet weak var gpsInaccurateLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
 
         startStopButton.layer.cornerRadius = 49
         startStopButton.clipsToBounds = true
-        startStopButton.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.5)
         startStopButton.backgroundColor = UIColor(red: 0.9, green: 0.2, blue: 0.2, alpha: 0.5)
+
+        if let trainLenght = UserDefaults.standard.string(forKey: userDefaultsTrainLength) {
+            trainLengthTextBox.text = trainLenght;
+        }
+
     }
 
+    @IBAction func startStopWasPressed(_ sender: Any) {
+        UserDefaults.standard.set(trainLengthTextBox.text, forKey: userDefaultsTrainLength)
+    }
 
 }
 

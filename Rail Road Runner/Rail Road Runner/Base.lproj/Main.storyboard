@@ -81,6 +81,9 @@
                                                 <state key="normal" title="Start">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="startStopWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H55-Ni-55f"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoF-Sn-NjO">
                                                 <rect key="frame" x="7.5" y="379.5" width="269" height="20.5"/>
@@ -117,7 +120,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="gpsInaccurateLabel" destination="xoF-Sn-NjO" id="X8d-Tc-n45"/>
+                        <outlet property="gpsIsNotAccurateLabel" destination="gyl-Vp-hFB" id="Tim-6F-9M0"/>
+                        <outlet property="progressView" destination="b5W-sN-6A9" id="wKJ-yV-jPU"/>
                         <outlet property="startStopButton" destination="yd9-5T-eNn" id="pbp-Su-KsG"/>
+                        <outlet property="trainLengthTextBox" destination="sr9-wH-gEX" id="35C-CL-47N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
