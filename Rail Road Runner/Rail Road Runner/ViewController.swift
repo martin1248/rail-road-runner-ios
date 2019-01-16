@@ -8,24 +8,20 @@
 
 import UIKit
 import CoreLocation
+import AVFoundation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
     let userDefaultsTrainLength = "trainLength"
-    let minGpsAccuracy : Double = 50
 
     @IBOutlet weak var trainLengthTextBox: UITextField!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var remainingTrainLength: UILabel!
     @IBOutlet weak var startStopButton: UIButton!
-    @IBOutlet weak var gpsAccuracyInfoLabel: UILabel!
-    @IBOutlet weak var abortedInfoLabel: UILabel!
 
-    var updateTimer : Timer?
-    var locationManager:CLLocationManager!
+    var locationManager : CLLocationManager!
     var started = false
-
-    var lastLocation : CLLocation?
-    var currentDistance : CLLocationDistance?
+    var startLocation : CLLocation?
 
     // MARK: - UIView
 
@@ -46,18 +42,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         startStopButton.layer.cornerRadius = 49
         startStopButton.clipsToBounds = true
         startStopButton.isEnabled = true
-
-        self.updateTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-    }
-
-    @objc func update() {
-
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         locationManager.stopUpdatingLocation()
-        updateTimer?.invalidate()
     }
 
     // MARK: - CLLocationManager
@@ -72,29 +61,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let currentLocation:CLLocation = locations[0] as CLLocation
 
-        let gpsAccurateEnough : Bool = currentLocation.horizontalAccuracy > minGpsAccuracy
-
-        if !gpsAccurateEnough {
-            gpsAccuracyInfoLabel.text = "GPS Koordinaten sind zu ungenau."
-            startStopButton.isEnabled = false
-        } else {
-            gpsAccuracyInfoLabel.text = ""
-            startStopButton.isEnabled = true
-        }
-
         if started {
-            if lastLocation != nil {
-                let lastDistance = lastLocation?.distance(from: currentLocation)
-
+            if startLocation == nil {
+                startLocation = currentLocation
+            } else {
+                let currentDistance : Int! = Int(startLocation!.distance(from: currentLocation))
+                let expectedLength : Int! = Int(trainLengthTextBox.text!)
+                var remainingLength = expectedLength  - currentDistance
+                if remainingLength < 0 {
+                    remainingLength = 0
+                    started = false
+                    trainLengthTextBox.isUserInteractionEnabled = true
+                    startStopButton.setTitle("Start", for: UIControl.State.normal)
+                    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                    AudioServicesPlaySystemSound(1010)
+                }
+                remainingTrainLength.text = String(remainingLength)
             }
-            lastLocation = currentLocation
         } else {
-            lastLocation = nil
+            startLocation = nil
         }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Unable to access your current location")
+        print("Unable to access your current location: " + error.localizedDescription)
     }
 
     // MARK: - UI
@@ -115,6 +105,5 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             startStopButton.setTitle("Start", for: UIControl.State.normal)
         }
     }
-
 }
 

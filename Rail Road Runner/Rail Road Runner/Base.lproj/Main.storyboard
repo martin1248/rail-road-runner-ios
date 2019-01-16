@@ -59,8 +59,8 @@
                                                     <constraint firstAttribute="width" constant="284" id="hZb-s0-HEb"/>
                                                 </constraints>
                                             </progressView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="635" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="quF-Eg-Agf">
-                                                <rect key="frame" x="97" y="163" width="90" height="60"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="quF-Eg-Agf">
+                                                <rect key="frame" x="126.5" y="163" width="31" height="60"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -72,7 +72,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-5T-eNn">
-                                                <rect key="frame" x="92" y="260" width="100" height="100"/>
+                                                <rect key="frame" x="92" y="300" width="100" height="100"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="100" id="OIh-Yr-T1y"/>
                                                     <constraint firstAttribute="height" constant="100" id="yOX-kq-a54"/>
@@ -85,29 +85,13 @@
                                                     <action selector="startStopWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H55-Ni-55f"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoF-Sn-NjO">
-                                                <rect key="frame" x="142" y="360" width="0.0" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="6Rr-oi-Pr9"/>
-                                                </constraints>
-                                                <attributedString key="attributedText"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EVR-Cm-ft0">
-                                                <rect key="frame" x="121" y="400" width="42" height="0.0"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="284" id="4v4-5h-vDC"/>
                                             <constraint firstItem="sr9-wH-gEX" firstAttribute="top" secondItem="VGI-ec-Gdj" secondAttribute="bottom" id="MVj-Ex-xUA"/>
                                             <constraint firstAttribute="height" constant="400" id="R7g-cb-XfS"/>
-                                            <constraint firstItem="xoF-Sn-NjO" firstAttribute="top" secondItem="yd9-5T-eNn" secondAttribute="bottom" id="RPF-IR-Mi3"/>
                                             <constraint firstItem="rYk-ou-8Cv" firstAttribute="top" secondItem="sr9-wH-gEX" secondAttribute="bottom" constant="60" id="cyq-iU-YjJ"/>
                                             <constraint firstItem="b5W-sN-6A9" firstAttribute="top" secondItem="rYk-ou-8Cv" secondAttribute="bottom" id="fAA-kL-Hqt"/>
-                                            <constraint firstAttribute="bottom" secondItem="xoF-Sn-NjO" secondAttribute="bottom" id="gyl-Vp-hFB"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -121,9 +105,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="abortedInfoLabel" destination="EVR-Cm-ft0" id="sE2-cy-qfy"/>
-                        <outlet property="gpsAccuracyInfoLabel" destination="xoF-Sn-NjO" id="X8d-Tc-n45"/>
                         <outlet property="progressView" destination="b5W-sN-6A9" id="wKJ-yV-jPU"/>
+                        <outlet property="remainingTrainLength" destination="quF-Eg-Agf" id="h5u-bO-DdJ"/>
                         <outlet property="startStopButton" destination="yd9-5T-eNn" id="pbp-Su-KsG"/>
                         <outlet property="trainLengthTextBox" destination="sr9-wH-gEX" id="35C-CL-47N"/>
                     </connections>
