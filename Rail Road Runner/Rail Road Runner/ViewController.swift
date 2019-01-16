@@ -19,6 +19,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var remainingTrainLength: UILabel!
     @IBOutlet weak var startStopButton: UIButton!
+    @IBOutlet weak var locationServiceInfoLabel: UILabel!
 
     var locationManager : CLLocationManager!
     var started = false
@@ -36,8 +37,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         initLocationManager()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
+            activateButton()
         } else {
-            setButtonEnabled(enabled: false, disabledReason: "Ortungs Service ist nicht aktiviert")
+            deactivateButton(reason: "Ortungs Service ist nicht aktiviert")
         }
 
         if let trainLenght = UserDefaults.standard.string(forKey: userDefaultsTrainLength) {
@@ -47,8 +49,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         startStopButton.layer.cornerRadius = 49
         startStopButton.clipsToBounds = true
 
-
-        start(start: false)
+        reset()
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -72,13 +73,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         let currentLocation:CLLocation = locations[0] as CLLocation
 
         if currentLocation.horizontalAccuracy < 50 {
-            setButtonEnabled(enabled: true, disabledReason: "")
+            if !started {
+                activateButton()
+            }
         } else {
             if started {
-                setButtonEnabled(enabled: false, disabledReason: "Abbruch: Koordinaten sind zu ungenau")
-                start(start: false)
+                stop()
+                deactivateButton(reason: "Abbruch: Ungenaue Koordinate")
+                print("Ungenaue Koordinate: " + String(currentLocation.horizontalAccuracy))
             } else {
-                setButtonEnabled(enabled: false, disabledReason: "Koordinaten sind zu ungenau")
+                deactivateButton(reason: "Ungenaue Koordinate")
             }
         }
 
@@ -95,10 +99,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if started {
-            setButtonEnabled(enabled: false, disabledReason: "Abbruch: Koordinaten sind nicht mehr verfügbar")
-            start(start: false)
+            stop()
+            deactivateButton(reason: "Abbruch: Koordinaten sind nicht verfügbar")
         } else {
-            setButtonEnabled(enabled: false, disabledReason: "Koordinaten sind nicht verfügbar")
+            deactivateButton(reason: "Koordinaten sind nicht verfügbar")
         }
     }
 
@@ -131,20 +135,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     }
 
     @IBAction func buttonWasPressed(_ sender: Any) {
-         start(start: !started)
+        if started {
+            stop()
+        } else {
+            start()
+        }
     }
 
-    func start(start: Bool) {
-        started = start
-        trainLengthTextBox.isUserInteractionEnabled = start ? false : true
-        startStopButton.setTitle(start ? "Stop" : "Start", for: UIControl.State.normal)
+    func start() {
+        print("start")
+        started = true
+        trainLengthTextBox.isUserInteractionEnabled = false
+        startStopButton.setTitle("Stop", for: UIControl.State.normal)
+        UserDefaults.standard.set(trainLengthTextBox.text, forKey: userDefaultsTrainLength)
+    }
 
-        if start {
-            UserDefaults.standard.set(trainLengthTextBox.text, forKey: userDefaultsTrainLength)
-        } else {
-            progressView.progress = 0
-            remainingTrainLength.text = ""
-        }
+    func stop() {
+        print("stop")
+        started = false
+        reset()
+    }
+
+    func reset() {
+        print("reset")
+        trainLengthTextBox.isUserInteractionEnabled = true
+        startStopButton.setTitle("Start", for: UIControl.State.normal)
+        progressView.progress = 0
+        remainingTrainLength.text = ""
     }
 
     func newLocationReceived(newLocation : CLLocation) {
@@ -156,20 +173,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
             progressView.progress = fractionalProgress;
             remainingTrainLength.text = String(remainingLength)
         } else {
-            start(start: false)
+            stop()
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
             //AudioServicesPlaySystemSound(1010)
         }
     }
 
-    func setButtonEnabled(enabled: Bool, disabledReason: String) {
-        startStopButton.isEnabled = enabled
-        if enabled {
-            startStopButton.backgroundColor = UIColor(red: 0.8, green: 0.1, blue: 0.1, alpha: 0.5)
-        } else {
-            startStopButton.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5)
-        }
-        print(disabledReason)
+    func activateButton() {
+        print("activateButton")
+        startStopButton.isEnabled = true
+        startStopButton.backgroundColor = UIColor(red: 0.8, green: 0.1, blue: 0.1, alpha: 0.5)
+        startStopButton.setTitle("Start", for: UIControl.State.normal)
+        locationServiceInfoLabel.text = ""
+    }
+
+    func deactivateButton(reason: String) {
+        print("deactivateButton")
+        startStopButton.isEnabled = false
+        startStopButton.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5)
+        startStopButton.setTitle("Deaktiviert", for: UIControl.State.normal)
+        locationServiceInfoLabel.text = reason
     }
 }
 
