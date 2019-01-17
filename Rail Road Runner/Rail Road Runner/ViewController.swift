@@ -10,16 +10,28 @@ import UIKit
 import CoreLocation
 import AVFoundation
 
+enum ButtonState {
+    case Start
+    case Stop
+    case Deaktiviert
+}
+
+enum StopReason {
+    case finished
+    case stoppedByUser
+    case stoppedDueToInsufficientLocationService
+}
+
 class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    let trainLengths = ["100", "150", "200", "250", "300", "350", "400", "450", "500", "550", "600", "650", "700", "750" , "800" , "850", "900", "950", "1000"]
+    let trainLengths = ["100", "150", "200", "250", "300", "350", "400", "450", "500", "550", "600", "650", "700", "750" , "800" , "850", "900", "950", "1000", "1050", "1100", "1150", "1200", "1250", "1300", "1350", "1400"]
     let userDefaultsTrainLength = "trainLength"
 
     @IBOutlet weak var trainLengthTextBox: UITextField!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var remainingTrainLength: UILabel!
     @IBOutlet weak var startStopButton: UIButton!
-    @IBOutlet weak var locationServiceInfoLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
 
     var locationManager : CLLocationManager!
     var started = false
@@ -37,9 +49,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         initLocationManager()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
-            activateButton()
+            setButtonAndText(state: .Start, text: "")
         } else {
-            deactivateButton(reason: "Ortungs Service ist nicht aktiviert")
+            setButtonAndText(state: .Deaktiviert, text: "Ortungsdienst ist deaktiviert")
         }
 
         if let trainLenght = UserDefaults.standard.string(forKey: userDefaultsTrainLength) {
@@ -60,6 +72,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
         locationManager.stopUpdatingLocation()
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - CLLocationManager
 
     func initLocationManager() {
@@ -74,15 +90,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
 
         if currentLocation.horizontalAccuracy < 50 {
             if !started {
-                activateButton()
+                setButtonAndText(state: .Start, text: "")
             }
         } else {
             if started {
-                stop()
-                deactivateButton(reason: "Abbruch: Ungenaue Koordinate")
-                print("Ungenaue Koordinate: " + String(currentLocation.horizontalAccuracy))
+                stop(reason: StopReason.stoppedDueToInsufficientLocationService)
+                setButtonAndText(state: .Deaktiviert, text: "Abbruch: Standortdaten sind zu ungenau")
             } else {
-                deactivateButton(reason: "Ungenaue Koordinate")
+                setButtonAndText(state: .Deaktiviert, text: "Standortdaten sind zu ungenau")
             }
         }
 
@@ -99,10 +114,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if started {
-            stop()
-            deactivateButton(reason: "Abbruch: Koordinaten sind nicht verfügbar")
+            stop(reason: StopReason.stoppedDueToInsufficientLocationService)
+            setButtonAndText(state: .Deaktiviert, text: "Abbruch: Standortdaten sind nicht mehr verfügar")
         } else {
-            deactivateButton(reason: "Koordinaten sind nicht verfügbar")
+            setButtonAndText(state: .Deaktiviert, text: "Standortdaten sind nicht verfügar")
         }
     }
 
@@ -136,30 +151,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
 
     @IBAction func buttonWasPressed(_ sender: Any) {
         if started {
-            stop()
+            stop(reason: StopReason.stoppedByUser)
+            setButtonAndText(state: .Start, text: "")
         } else {
+            setButtonAndText(state: .Stop, text: "")
             start()
         }
     }
 
     func start() {
-        print("start")
         started = true
         trainLengthTextBox.isUserInteractionEnabled = false
-        startStopButton.setTitle("Stop", for: UIControl.State.normal)
         UserDefaults.standard.set(trainLengthTextBox.text, forKey: userDefaultsTrainLength)
     }
 
-    func stop() {
-        print("stop")
+    func stop(reason : StopReason) {
         started = false
+        if reason == StopReason.finished {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            AudioServicesPlaySystemSound(1010)
+        } else if reason == StopReason.stoppedDueToInsufficientLocationService {
+            AudioServicesPlaySystemSound(1005)
+        }
         reset()
     }
 
     func reset() {
-        print("reset")
         trainLengthTextBox.isUserInteractionEnabled = true
-        startStopButton.setTitle("Start", for: UIControl.State.normal)
         progressView.progress = 0
         remainingTrainLength.text = ""
     }
@@ -173,26 +191,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
             progressView.progress = fractionalProgress;
             remainingTrainLength.text = String(remainingLength)
         } else {
-            stop()
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-            //AudioServicesPlaySystemSound(1010)
+            stop(reason: StopReason.finished)
         }
     }
 
-    func activateButton() {
-        print("activateButton")
-        startStopButton.isEnabled = true
-        startStopButton.backgroundColor = UIColor(red: 0.8, green: 0.1, blue: 0.1, alpha: 0.5)
-        startStopButton.setTitle("Start", for: UIControl.State.normal)
-        locationServiceInfoLabel.text = ""
-    }
+    func setButtonAndText(state: ButtonState, text: String) {
+        if state == ButtonState.Deaktiviert {
+            startStopButton.isEnabled = false
+            startStopButton.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        } else {
+            startStopButton.isEnabled = true
+            startStopButton.backgroundColor = UIColor(red: 1.0, green: 0.3, blue: 0.3, alpha: 0.5)
+        }
+        startStopButton.setTitle("\(state)", for: UIControl.State.normal)
 
-    func deactivateButton(reason: String) {
-        print("deactivateButton")
-        startStopButton.isEnabled = false
-        startStopButton.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5)
-        startStopButton.setTitle("Deaktiviert", for: UIControl.State.normal)
-        locationServiceInfoLabel.text = reason
+        infoLabel.text = text
     }
 }
 

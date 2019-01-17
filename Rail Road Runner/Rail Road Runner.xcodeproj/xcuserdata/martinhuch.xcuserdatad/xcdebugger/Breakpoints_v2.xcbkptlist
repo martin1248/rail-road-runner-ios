@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rail Road Runner/ViewController.swift"
-            timestampString = "569338060.453724"
+            timestampString = "569413959.263968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "newLocationReceived(newLocation:)"
             landmarkType = "7">
          </BreakpointContent>
