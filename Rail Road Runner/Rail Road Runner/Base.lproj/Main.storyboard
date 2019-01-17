@@ -31,19 +31,19 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="700" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sr9-wH-gEX">
-                                                <rect key="frame" x="118.5" y="17" width="53" height="30"/>
+                                                <rect key="frame" x="118.5" y="22" width="53" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0d-p1-3jW">
-                                                <rect key="frame" x="126" y="47" width="38" height="17"/>
+                                                <rect key="frame" x="126" y="57" width="38" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Train length black.png" translatesAutoresizingMaskIntoConstraints="NO" id="rYk-ou-8Cv">
-                                                <rect key="frame" x="3" y="107" width="284" height="54"/>
+                                                <rect key="frame" x="3" y="112" width="284" height="54"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                                 </accessibility>
@@ -53,7 +53,7 @@
                                                 </constraints>
                                             </imageView>
                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="b5W-sN-6A9">
-                                                <rect key="frame" x="3" y="161" width="284" height="10"/>
+                                                <rect key="frame" x="3" y="166" width="284" height="10"/>
                                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="10" id="Bnj-cM-H7e"/>
@@ -61,7 +61,7 @@
                                                 </constraints>
                                             </progressView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="675" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="quF-Eg-Agf">
-                                                <rect key="frame" x="101" y="171" width="88" height="60"/>
+                                                <rect key="frame" x="101" y="176" width="88" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="Kjg-pI-1kp"/>
                                                 </constraints>
@@ -70,7 +70,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meter verbleibend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBE-ET-OYC">
-                                                <rect key="frame" x="86" y="231" width="118" height="17"/>
+                                                <rect key="frame" x="86" y="236" width="118" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -101,7 +101,8 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="290" id="4v4-5h-vDC"/>
-                                            <constraint firstItem="sr9-wH-gEX" firstAttribute="top" secondItem="VGI-ec-Gdj" secondAttribute="bottom" id="MVj-Ex-xUA"/>
+                                            <constraint firstItem="c0d-p1-3jW" firstAttribute="top" secondItem="sr9-wH-gEX" secondAttribute="bottom" constant="5" id="BI5-fR-qdN"/>
+                                            <constraint firstItem="sr9-wH-gEX" firstAttribute="top" secondItem="VGI-ec-Gdj" secondAttribute="bottom" constant="5" id="MVj-Ex-xUA"/>
                                             <constraint firstAttribute="height" constant="460" id="R7g-cb-XfS"/>
                                             <constraint firstItem="rYk-ou-8Cv" firstAttribute="top" secondItem="sr9-wH-gEX" secondAttribute="bottom" constant="60" id="cyq-iU-YjJ"/>
                                             <constraint firstItem="b5W-sN-6A9" firstAttribute="top" secondItem="rYk-ou-8Cv" secondAttribute="bottom" id="fAA-kL-Hqt"/>
